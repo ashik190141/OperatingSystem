@@ -1,27 +1,49 @@
-p=int(input())
+operation,waitingTime,turnaroundTime,burstTime,execution,ready=[],[],[],[],[],[]
+noOfProcess=int(input())
+cnt=1
 
-ta=[]
-for _ in range(p):
-    at=int(input())
-    bt=int(input())
-    ta.append((at,bt))
-ta.sort()
-sum=ta[0][0]
-wt=[]
-for i in range(p):
-    if(sum>=ta[i][0]):
-        wt.append(sum)
-        sum=sum+ta[i][1] #4
-        print(ta[i][1])
+for _ in range(noOfProcess):
+    process, arrival, burst = map(int, input().strip().split())
+    operation.append((arrival,process,burst))
+    waitingTime.append(-1)
+    turnaroundTime.append(-1)
+    burstTime.append(burst)
+
+operation.sort()
+execution.append((operation[0][1],operation[0][2]))
+sum=operation[0][2]
+operation.pop(0)
+
+while(cnt!=noOfProcess):
+    ready=[]
+
+    for i in range(len(operation)):
+        if(operation[i][0]<=sum):
+            ready.append(operation[i])
+    
+    if(len(ready)!=0):
+        sum+=ready[0][2]
+        execution.append((ready[0][1],sum))
+        operation.remove(ready[0])
+        ready.pop(0)
+        cnt+=1
     else:
-        wt.append(ta[i][0])
-        sum = sum+(ta[i][0]-sum)+ta[i][1]
-        print(ta[i][1])
+        sum+=1
+
+print(execution)
+
+for i in range(noOfProcess):
+    turnaroundTime[execution[i][0]-1]=execution[i][1]
+
+print(turnaroundTime)
+
 avg=0
-for i in range(p):
-    avg=avg+wt[i]-ta[i][0]
-print(wt)
-print(avg/p)
+for i in range(noOfProcess):
+    waitingTime[i]=turnaroundTime[i]-burstTime[i]
+    avg+=waitingTime[i]
+
+print(waitingTime)
+print(avg/noOfProcess)
 '''
 wt=[]
 bt=[]
