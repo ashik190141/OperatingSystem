@@ -1,4 +1,4 @@
-operation,waitingTime,turnaroundTime,burstTime,execution,ready=[],[],[],[],[],[]
+operation,waitingTime,turnaroundTime,burstTime,execution,ready,arrivalTime=[],[],[],[],[],[],[]
 noOfProcess=int(input())
 cnt=1
 
@@ -8,6 +8,7 @@ for _ in range(noOfProcess):
     waitingTime.append(-1)
     turnaroundTime.append(-1)
     burstTime.append(burst)
+    arrivalTime.append(arrival)
 
 operation.sort()
 execution.append((operation[0][1],operation[0][2]))
@@ -33,7 +34,7 @@ while(cnt!=noOfProcess):
 print(execution)
 
 for i in range(noOfProcess):
-    turnaroundTime[execution[i][0]-1]=execution[i][1]
+    turnaroundTime[execution[i][0]-1]=execution[i][1]-arrivalTime[execution[i][0]-1]
 
 print(turnaroundTime)
 

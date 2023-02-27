@@ -1,37 +1,46 @@
-pt=[]
-wt=[]
-apt=[]
-n = int(input())
-for _ in range(n):
-    x, y = map(int, input().strip().split())
-    pt.append((x,y))
-    apt.append((x,y))
-for i in range(n):
-    wt.append(-1)
-rpt=[]
-pt.sort()
-sum=pt[0][1]
-wt[0]=pt[0][0]
-pt.pop(0)
-n=n-1
-while(n!=0):
-    rpt=[]
-    for i in range(len(pt)):
-        if(pt[i][0]<=sum):
-            rpt.append((pt[i][1],pt[i][0]))
-    rpt.sort()
-    p=rpt[0][1]
-    q=rpt[0][0]
-    for i in range(len(apt)):
-        if rpt[0][0]==apt[i][1]:
-            pos=i
-            break
-    wt[pos]=sum
-    sum = sum+rpt[0][0]
-    pt.remove((p,q))
-    n=n-1
-print(wt)
-avg=0
-for i in range(len(apt)):
-    avg=avg+abs(wt[i]-apt[i][0])
-print(avg/len(apt))
+operation,burstTime,execution,processQueue,processIndex,arrivalTime=[],[],[],[],[],[]
+turnaroundTime,waitingTime=[],[]
+noOfProcess=int(input())
+
+for _ in range(noOfProcess):
+    process, arrival, burst = map(int, input().strip().split())
+    burstTime.append(burst)
+    arrivalTime.append(arrival)
+    operation.append((arrival,process,burst))
+    processIndex.append(-1)
+    turnaroundTime.append(-1)
+    waitingTime.append(-1)
+
+operation.sort()
+execution.append((operation[0][1],operation[0][2]))
+sum = operation[0][2]
+processIndex[operation[0][1]-1]=1
+operation.pop(0)
+
+for i in range(noOfProcess-1):
+
+    for j in range(noOfProcess-1):
+        if(operation[j][0]<=sum and processIndex[operation[j][1]-1]==-1):
+            processQueue.append((operation[j][2],operation[j][0],operation[j][1]))  #burst arrival process
+    
+    processQueue.sort()
+    sum += processQueue[0][0]
+    execution.append((processQueue[0][2],sum))
+    processIndex[processQueue[0][2]-1]=1
+    processQueue=[]
+
+print(execution)
+
+for i in range(noOfProcess):
+    k = execution[i][0]-1
+    turnaroundTime[execution[i][0]-1] = execution[i][1] - arrivalTime[execution[i][0]-1]
+
+print(turnaroundTime)
+
+avg = 0
+for i in range(noOfProcess):
+    waitingTime[i] = turnaroundTime[i]-burstTime[i]
+    avg += waitingTime[i]
+
+print(waitingTime)
+print(avg/noOfProcess)

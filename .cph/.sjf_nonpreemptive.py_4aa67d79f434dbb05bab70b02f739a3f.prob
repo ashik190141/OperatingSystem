@@ -1,0 +1,1 @@
+{"name":"Local: sjf_nonpreemptive","url":"/home/ashik/Documents/Code/OS/sjf_nonpreemptive.py","tests":[{"id":1677515637219,"input":"5\n1 2 6\n2 5 2\n3 1 8\n4 0 3\n5 4 4","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"/home/ashik/Documents/Code/OS/sjf_nonpreemptive.py","group":"local","local":true}
