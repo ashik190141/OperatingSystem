@@ -1,52 +1,59 @@
-pt,wt,apt,at,bt=[],[],[],[],[]
-turnAroundTime,completionTime,waitingTime = [],[],[]
-n = int(input())
-total_time=0
-for _ in range(n):
-    x, y,z = map(int, input().strip().split())
-    total_time+=y
-    pt.append((x, y,z))
-    apt.append((x, y,z))
-    turnAroundTime.append(-1)
-    completionTime.append(-1)
+operation, arrivalTime, burstTime, execution, readyQueue = [], [], [], [], []
+turnaroundTime, waitingTime, completionTime = [], [], []
+noOfProcess=int(input())
+totalTime,sum=0,0
+
+for _ in range(noOfProcess):
+    process, arrival, burst = map(int, input().strip().split())
+    totalTime+=burst
+    burstTime.append(burst)
+    arrivalTime.append(arrival)
+    operation.append((arrival, process, burst))
+    turnaroundTime.append(-1)
     waitingTime.append(-1)
-for i in range(total_time):
-    wt.append(-1)
-pt.sort()
-j=pt[0][0]
-while(j!=total_time):
-    bt=[]
-    for i in range(n):
-        if(pt[i][0]<=j and pt[i][1]!=0):
-            bt.append((pt[i][1], pt[i][0], pt[i][2]))
-    bt.sort()
-    wt[j]=bt[0][2]
-    j+=1
-    match=((bt[0][1],bt[0][0],bt[0][2]))
-    for i in range(n):
-        if(pt[i]==match):
-            t0=pt[i][0]
-            t1=pt[i][1]-1
-            t2=pt[i][2]
-            pt[i]=(t0,t1,t2)
-            break
-print(wt)
-for i in range(n):
-    pick=i+1
-    b=0
-    for j in range(total_time,-1,-1):
-        if(wt[j-1]==pick and b==0):
-            completionTime[i]=j
-            b=1
-        elif(b==1):
-            break
+    completionTime.append(-1)
+
+operation.sort()
+
+while(sum!=totalTime):
+
+    for i in range(noOfProcess):
+        if(sum>=operation[i][0] and operation[i][2]!=0):
+            readyQueue.append((operation[i][2],operation[i][0],operation[i][1]))    #b a p
+
+    readyQueue.sort()
+
+    if(readyQueue[0][0]>0):
+        sum+=1
+        execution.append((readyQueue[0][2],sum))
+
+        first_parameter_arrivalTime= readyQueue[0][1]
+        second_parameter_process = readyQueue[0][2]
+        third_parameter_burst = readyQueue[0][0] - 1
+
+        operation.remove((first_parameter_arrivalTime, second_parameter_process, third_parameter_burst+1))
+        operation.append((first_parameter_arrivalTime,second_parameter_process, third_parameter_burst))
+        operation.sort()
+        readyQueue=[]
+
+print(execution)
+
+count=0
+for i in range(len(execution)-1,-1,-1):
+    if(completionTime[execution[i][0]-1] == -1):
+        completionTime[execution[i][0]-1]=execution[i][1]
+        count+=1
+    elif count==noOfProcess:
+        break
 print(completionTime)
-for i in range(n):
-    turnAroundTime[i]=completionTime[i]-pt[i][0]
-print(turnAroundTime)
-sum=0
-for i in range(n):
-    waitingTime[i]=turnAroundTime[i]-apt[i][1]
-    sum=sum+waitingTime[i]
-averageWaitingTime=sum/n
-print(averageWaitingTime)
+
+for i in range(noOfProcess):
+    turnaroundTime[i]=completionTime[i]-arrivalTime[i]
+print(turnaroundTime)
+
+avg=0
+for i in range(noOfProcess):
+    waitingTime[i]=turnaroundTime[i]-burstTime[i]
+    avg+=waitingTime[i]
+print(waitingTime)
+print(avg/noOfProcess)
