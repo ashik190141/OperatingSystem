@@ -4,7 +4,7 @@
 int main(){
     struct stat sfile;
     stat("stat_file.txt", &sfile);
-    printf("Stat mode is: %o\n", sfile.st_mode);
+    printf("Stat mode is: %o\n", sfile.st_mode && 0777);
 }
 
 
