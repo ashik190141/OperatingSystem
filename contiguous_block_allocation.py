@@ -3,7 +3,7 @@ n = int(input())
 fileInfo = []
 
 for i in range(n):
-    print(f'Enter the file {i+1}: ',end='')
+    print(f'Enter name of file {i+1}: ',end='')
     fileName = input()
     print(f'Enter the starting block of file {i+1}: ',end='')
     startingBlock = int(input())

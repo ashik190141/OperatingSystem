@@ -4,12 +4,12 @@ fileInfo = []
 
 for i in range(n):
     data_of_blocks = []
-    print(f'Enter the file {i+1}: ', end='')
+    print(f'Enter name of the file {i+1}: ', end='')
     fileName = input()
     print(f'Enter the number of blocks in file {i+1}: ', end='')
     no_of_block = int(input())
     for j in range(no_of_block):
-        print(f'{j+1} no block is',end=' ')
+        print(f'{j+1} no block address is',end=' ')
         blocks = int(input())
         data_of_blocks.append(blocks)
     fileInfo.append((fileName,data_of_blocks))
