@@ -3,16 +3,16 @@ noOfProcess=int(input())
 cnt=1
 
 for _ in range(noOfProcess):
-    process, arrival, burst = map(int, input().strip().split())
-    operation.append((arrival,process,burst))
-    waitingTime.append(-1)
-    turnaroundTime.append(-1)
-    burstTime.append(burst)
-    arrivalTime.append(arrival)
+    process, arrival, burst = map(int, input().strip().split()) #1 3 1
+    operation.append((arrival,process,burst))#[(3,1,1),(4,2,5),(0,3,2),(3,7,4),(5,5,5)]
+    waitingTime.append(-1) #[-1,-1,-1,-1,-1]
+    turnaroundTime.append(-1) #[-1,-1,-1,-1,-1]
+    burstTime.append(burst) #[1,5,2,7,5]
+    arrivalTime.append(arrival) #[3,4,0,3,5]
 
 operation.sort()
-execution.append((operation[0][1],operation[0][2]))
-sum=operation[0][2]
+execution.append((operation[0][1],operation[0][2])) #operation[0][1]
+sum=operation[0][2] #operation
 operation.pop(0)
 
 while(cnt!=noOfProcess):
